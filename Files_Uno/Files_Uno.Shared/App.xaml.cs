@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -69,7 +70,7 @@ namespace Files
 
             // Initialize NLog
             Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-            NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
+            //NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
 
             RegisterUncaughtExceptionLogger();
 
@@ -114,7 +115,7 @@ namespace Files
         {
             StorageFolder cacheFolder = ApplicationData.Current.LocalCacheFolder;
             var ListFile = await cacheFolder.GetFileAsync("PinnedItems.txt");
-            var ListFileLines = await FileIO.ReadLinesAsync(ListFile);
+            var ListFileLines = await File.ReadAllLinesAsync(ListFile.Path);
             foreach (string path in ListFileLines)
             {
                 if (path == App.rightClickedItem.Path.ToString())

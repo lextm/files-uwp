@@ -1,0 +1,19 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Files_Uno.macOS", "Files_Uno.macOS.csproj", "{BB972E80-7F6E-4332-8719-8B167FAA16EA}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Files_Uno.Shared", "..\Files_Uno.Shared\Files_Uno.Shared.shproj", "{6279C845-92F8-4333-AB99-3D213163593C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB972E80-7F6E-4332-8719-8B167FAA16EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB972E80-7F6E-4332-8719-8B167FAA16EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB972E80-7F6E-4332-8719-8B167FAA16EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB972E80-7F6E-4332-8719-8B167FAA16EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

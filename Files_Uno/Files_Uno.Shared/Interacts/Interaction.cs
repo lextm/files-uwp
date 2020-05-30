@@ -162,12 +162,12 @@ namespace Files.Interacts
                 try
                 {
                     var ListFile = await cacheFolder.GetFileAsync("PinnedItems.txt");
-                    await FileIO.AppendLinesAsync(ListFile, items);
+                    await File.AppendAllLinesAsync(ListFile.Path, items);
                 }
                 catch (FileNotFoundException)
                 {
                     var createdListFile = await cacheFolder.CreateFileAsync("PinnedItems.txt");
-                    await FileIO.WriteLinesAsync(createdListFile, items);
+                    await File.WriteAllLinesAsync(createdListFile.Path, items);
                 }
                 finally
                 {

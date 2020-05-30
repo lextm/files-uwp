@@ -274,6 +274,7 @@ namespace Files.Filesystem
 
         private void GetVirtualDrivesList(IList<DriveItem> list)
         {
+#if !__MACOS__
             var oneDriveItem = new DriveItem()
             {
                 Text = "OneDrive",
@@ -286,6 +287,7 @@ namespace Files.Filesystem
             {
                 list.Add(oneDriveItem);
             }
+#endif
         }
 
         public void Dispose()
