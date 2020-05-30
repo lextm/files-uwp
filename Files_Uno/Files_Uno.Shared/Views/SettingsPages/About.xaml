@@ -1,0 +1,124 @@
+﻿<Page
+    x:Class="Files.SettingsPages.About"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Files.SettingsPages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:my="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ScrollViewer>
+            <StackPanel
+                Margin="12,12,8,8"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Orientation="Vertical"
+                Spacing="14">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <RepositionThemeTransition />
+                        <ReorderThemeTransition />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <TextBlock
+                    x:Uid="SettingsAboutTitle"
+                    FontSize="22"
+                    FontWeight="Medium"
+                    Text="About" />
+
+                <StackPanel Orientation="Horizontal">
+                    <Image
+                        Width="60"
+                        Source="/Assets/Files UWP Beta Icon.png"
+                        Stretch="Uniform" />
+                    <StackPanel Padding="12,0,0,0" Orientation="Vertical">
+                        <TextBlock
+                            x:Uid="SettingsAboutAppName"
+                            FontSize="16"
+                            FontWeight="Medium"
+                            Text="Files UWP" />
+                        <TextBlock
+                            x:Name="VersionNumber"
+                            Padding="0,4"
+                            FontSize="14"
+                            Opacity=".5"
+                            Text="Version number" />
+                    </StackPanel>
+                </StackPanel>
+
+                <ListView
+                    HorizontalAlignment="Left"
+                    IsItemClickEnabled="True"
+                    ItemClick="ListView_ItemClick">
+                    <ListViewItem
+                        x:Name="FeedbackForm"
+                        Padding="8,2"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        IsEnabled="True">
+                        <StackPanel
+                            Padding="0,4"
+                            Orientation="Horizontal"
+                            Spacing="14">
+                            <FontIcon Glyph="&#xED15;" />
+                            <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                                <TextBlock x:Uid="SettingsAboutSubmitFeedback" Text="Submit Feedback" />
+                                <TextBlock
+                                    x:Uid="SettingsAboutSubmitFeedbackDescription"
+                                    FontSize="12"
+                                    Foreground="Gray"
+                                    Text="Send the developers an issue report with more information"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+
+                <StackPanel Spacing="4">
+                    <TextBlock
+                        x:Uid="SettingsAboutSpecialThanks"
+                        FontSize="16"
+                        Text="Special thanks to:" />
+                    <TextBlock Text="SOI7" />
+                    <TextBlock Text="jeffsieu" />
+                    <TextBlock Text="lampenlampen" />
+                    <TextBlock Text="tsvietOK" />
+                </StackPanel>
+
+                <TextBlock
+                    x:Uid="SettingsAboutThirdPartyLicenses"
+                    Margin="0,16,0,0"
+                    FontSize="18"
+                    Text="Third Party Licenses">
+                    <TextBlock.Transitions>
+                        <TransitionCollection>
+                            <RepositionThemeTransition />
+                            <ReorderThemeTransition />
+                        </TransitionCollection>
+                    </TextBlock.Transitions>
+                </TextBlock>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="0,0,16,0"
+                        VerticalAlignment="Bottom"
+                        FontSize="16"
+                        Text="QuickLook" />
+                    <TextBlock
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Bottom"
+                        TextWrapping="WrapWholeWords">
+                        <Span xml:space="preserve"><Hyperlink NavigateUri="https://github.com/QL-Win/QuickLook">Link</Hyperlink></Span>
+                    </TextBlock>
+                    <TextBlock VerticalAlignment="Bottom" TextWrapping="WrapWholeWords">
+                        <Span xml:space="preserve"><Hyperlink NavigateUri="https://github.com/QL-Win/QuickLook/blob/master/LICENSE-GPL.txt">GPL</Hyperlink></Span>
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
