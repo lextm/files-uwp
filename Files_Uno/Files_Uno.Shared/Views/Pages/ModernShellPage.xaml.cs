@@ -194,10 +194,9 @@ namespace Files.Views.Pages
 
         private async void ModernShellPage_KeyUp(object sender, KeyRoutedEventArgs e)
         {
-#if !__MACOS__
-            var ctrl = Window.Current.CoreWindow.GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
-            var alt = Window.Current.CoreWindow.GetKeyState(VirtualKey.Menu).HasFlag(CoreVirtualKeyStates.Down);
-            var shift = Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down);
+            var ctrl = Windows.UI.Xaml.Window.Current.CoreWindow.GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
+            var alt = Windows.UI.Xaml.Window.Current.CoreWindow.GetKeyState(VirtualKey.Menu).HasFlag(CoreVirtualKeyStates.Down);
+            var shift = Windows.UI.Xaml.Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down);
             var tabInstance = App.CurrentInstance.CurrentPageType == typeof(GenericFileBrowser) 
                 || App.CurrentInstance.CurrentPageType == typeof(GridViewBrowser);
 
@@ -287,7 +286,6 @@ namespace Files.Views.Pages
                     //    (App.CurrentInstance.OperationsControl as RibbonArea).RibbonTabView.SelectedIndex = 3;
                     //    break;
             };
-#endif
 
             if (App.CurrentInstance.CurrentPageType == typeof(GridViewBrowser))
             {

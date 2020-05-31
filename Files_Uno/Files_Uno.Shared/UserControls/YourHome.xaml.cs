@@ -54,12 +54,10 @@ namespace Files
             Locations.ItemLoader.DisplayItems();
             recentItemsCollection.Clear();
             PopulateRecentsList();
-#if !__MACOS__
-            Frame rootFrame = Window.Current.Content as Frame;
+            Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
             var instanceTabsView = rootFrame.Content as InstanceTabsView;
             instanceTabsView.SetSelectedTabInfo(parameters, null);
             instanceTabsView.TabStrip_SelectionChanged(null, null);
-#endif
             App.CurrentInstance.NavigationToolbar.CanRefresh = false;
             App.PS.IsEnabled = false;
             App.CurrentInstance.NavigationToolbar.CanGoBack = App.CurrentInstance.ContentFrame.CanGoBack;

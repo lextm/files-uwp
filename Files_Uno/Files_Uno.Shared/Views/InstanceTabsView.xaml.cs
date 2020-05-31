@@ -33,7 +33,7 @@ namespace Files
             // Turn on Navigation Cache
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
-            //Window.Current.SizeChanged += Current_SizeChanged;
+            Windows.UI.Xaml.Window.Current.SizeChanged += Current_SizeChanged;
             Current_SizeChanged(null, null);
         }
 
@@ -71,12 +71,12 @@ namespace Files
                 AddNewTab(typeof(ModernShellPage), navArgs);
             }
 
-            //Microsoft.UI.Xaml.Controls.FontIconSource icon = new Microsoft.UI.Xaml.Controls.FontIconSource();
-            //icon.Glyph = "\xE713";
-            //if ((tabView.SelectedItem as TabViewItem).Header.ToString() != ResourceController.GetTranslation("SidebarSettings/Text") && (tabView.SelectedItem as TabViewItem).IconSource != icon)
-            //{
-            //    App.CurrentInstance = ItemViewModel.GetCurrentSelectedTabInstance<ModernShellPage>();
-            //}
+            var icon = new FontIcon();
+            icon.Glyph = "\xE713";
+            if ((tabView.SelectedItem as TabViewItem).Header.ToString() != ResourceController.GetTranslation("SidebarSettings/Text") && (tabView.SelectedItem as TabViewItem).Icon != icon)
+            {
+                App.CurrentInstance = ItemViewModel.GetCurrentSelectedTabInstance<ModernShellPage>();
+            }
         }
 
         public async void AddNewTab(Type t, string path)
@@ -84,8 +84,7 @@ namespace Files
             Frame frame = new Frame();
             //frame.Navigate(t, path);
             string tabLocationHeader = null;
-            Windows.UI.Xaml.Controls.FontIconSource fontIconSource = new Windows.UI.Xaml.Controls.FontIconSource();
-            Windows.UI.Xaml.Controls.IconSource tabIcon;
+            FontIcon fontIconSource = new FontIcon();
 
             if (path != null)
             {
@@ -189,7 +188,6 @@ namespace Files
                 }
             }
 
-            tabIcon = fontIconSource;
             Grid gr = new Grid();
             gr.Children.Add(frame);
             gr.HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -219,8 +217,7 @@ namespace Files
         public async void SetSelectedTabInfo(string text, string currentPathForTabIcon = null)
         {
             string tabLocationHeader;
-            Windows.UI.Xaml.Controls.FontIconSource fontIconSource = new Windows.UI.Xaml.Controls.FontIconSource();
-            Windows.UI.Xaml.Controls.IconSource tabIcon;
+            Windows.UI.Xaml.Controls.FontIcon fontIconSource = new Windows.UI.Xaml.Controls.FontIcon();
 
             if (currentPathForTabIcon == null && text == ResourceController.GetTranslation("SidebarSettings/Text"))
             {
@@ -299,9 +296,8 @@ namespace Files
                     tabLocationHeader = currentPathForTabIcon.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).Split('\\', StringSplitOptions.RemoveEmptyEntries).Last();
                 }
             }
-            tabIcon = fontIconSource;
             (tabView.SelectedItem as TabViewItem).Header = tabLocationHeader;
-            //(tabView.SelectedItem as TabViewItem).Icon = tabIcon;
+            (tabView.SelectedItem as TabViewItem).Icon = fontIconSource;
         }
 
         public static string NormalizePath(string path)
@@ -402,7 +398,7 @@ namespace Files
 
         private void DragArea_Loaded(object sender, RoutedEventArgs e)
         {
-            //Window.Current.SetTitleBar(sender as Grid);
+            Windows.UI.Xaml.Window.Current.SetTitleBar(sender as Grid);
         }
 
         public void TabStrip_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -440,9 +436,9 @@ namespace Files
                     App.InteractionViewModel.LeftMarginLoaded = true;
                 }
 
-                Windows.UI.Xaml.Controls.FontIconSource icon = new Windows.UI.Xaml.Controls.FontIconSource();
+                Windows.UI.Xaml.Controls.FontIcon icon = new Windows.UI.Xaml.Controls.FontIcon();
                 icon.Glyph = "\xE713";
-                if ((tabView.SelectedItem as TabViewItem).Header.ToString() != ResourceController.GetTranslation("SidebarSettings/Text") /*&& (tabView.SelectedItem as TabViewItem).Icon != icon*/)
+                if ((tabView.SelectedItem as TabViewItem).Header.ToString() != ResourceController.GetTranslation("SidebarSettings/Text") && (tabView.SelectedItem as TabViewItem).Icon != icon)
                 {
                     App.CurrentInstance = ItemViewModel.GetCurrentSelectedTabInstance<ModernShellPage>();
                 }

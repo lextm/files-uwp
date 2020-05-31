@@ -17,9 +17,7 @@ namespace Files
 
             var CoreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             CoreTitleBar.ExtendViewIntoTitleBar = true;
-#if !__MACOS__
-            Window.Current.SetTitleBar(DragArea);
-#endif
+            Windows.UI.Xaml.Window.Current.SetTitleBar(DragArea);
             SettingsPane.SelectedItem = SettingsPane.MenuItems[0];
         }
 
@@ -56,10 +54,8 @@ namespace Files
 
         private void SettingsPane_BackRequested(Windows.UI.Xaml.Controls.NavigationView sender, Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
         {
-#if !__MACOS__
-            Frame rootFrame = Window.Current.Content as Frame;
+            Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(InstanceTabsView));
-#endif
         }
     }
 }

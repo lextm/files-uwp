@@ -134,10 +134,8 @@ namespace Files.Controls
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-#if !__MACOS__
-            Frame rootFrame = Window.Current.Content as Frame;
+            Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(Settings));
-#endif
             return;
         }
 

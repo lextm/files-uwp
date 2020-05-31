@@ -232,13 +232,11 @@ namespace Files
                     {
                         if (!(row.DataContext as ListedItem).ItemPropertiesInitialized)
                         {
-#if !__MACOS__
-                            await Window.Current.CoreWindow.Dispatcher.RunIdleAsync((e) =>
+                            await Windows.UI.Xaml.Window.Current.CoreWindow.Dispatcher.RunIdleAsync((e) =>
                             {
                                 App.CurrentInstance.ViewModel.LoadExtendedItemProperties(row.DataContext as ListedItem);
                                 (row.DataContext as ListedItem).ItemPropertiesInitialized = true;
                             });
-#endif
                         }
                     }
                 }
@@ -314,13 +312,11 @@ namespace Files
                 {
                     if (!(row.DataContext as ListedItem).ItemPropertiesInitialized)
                     {
-#if !__MACOS__
-                        await Window.Current.CoreWindow.Dispatcher.RunIdleAsync((e) =>
+                        await Windows.UI.Xaml.Window.Current.CoreWindow.Dispatcher.RunIdleAsync((e) =>
                         {
                             App.CurrentInstance.ViewModel.LoadExtendedItemProperties(row.DataContext as ListedItem);
                             (row.DataContext as ListedItem).ItemPropertiesInitialized = true;
                         });
-#endif
                     }
                 }
             }
@@ -392,14 +388,12 @@ namespace Files
             var parentRow = Interacts.Interaction.FindParent<DataGridRow>(sender);
             if ((!(parentRow.DataContext as ListedItem).ItemPropertiesInitialized) && (args.BringIntoViewDistanceX < sender.ActualHeight))
             {
-#if !__MACOS__
-                await Window.Current.CoreWindow.Dispatcher.RunIdleAsync((e) =>
+                await Windows.UI.Xaml.Window.Current.CoreWindow.Dispatcher.RunIdleAsync((e) =>
                 {
                     App.CurrentInstance.ViewModel.LoadExtendedItemProperties(parentRow.DataContext as ListedItem);
                     (parentRow.DataContext as ListedItem).ItemPropertiesInitialized = true;
                     //sender.EffectiveViewportChanged -= Icon_EffectiveViewportChanged;
                 });
-#endif
             }
         }
 

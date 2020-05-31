@@ -268,13 +268,11 @@ namespace Files
         {
             if (sender.DataContext != null && (!(sender.DataContext as ListedItem).ItemPropertiesInitialized) && (args.BringIntoViewDistanceX < sender.ActualHeight))
             {
-#if !__MACOS__
-                await Window.Current.CoreWindow.Dispatcher.RunIdleAsync((e) =>
+                await Windows.UI.Xaml.Window.Current.CoreWindow.Dispatcher.RunIdleAsync((e) =>
                 {
                     App.CurrentInstance.ViewModel.LoadExtendedItemProperties(sender.DataContext as ListedItem, _iconSize);
                     (sender.DataContext as ListedItem).ItemPropertiesInitialized = true;
                 });
-#endif
                 (sender as UIElement).CanDrag = FileList.SelectedItems.Contains(sender.DataContext as ListedItem); // Update CanDrag
             }
         }
