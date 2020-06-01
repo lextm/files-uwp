@@ -45,12 +45,21 @@ namespace Files.Filesystem
 
             try
             {
-                SpaceUsed = MaxSpace -
-                            Convert.ToUInt64(ByteSizeLib.ByteSize.FromBytes((ulong)properties["System.FreeSpace"]).GigaBytes);
-                MaxSpace = Convert.ToUInt64(ByteSizeLib.ByteSize.FromBytes((ulong)properties["System.Capacity"]).GigaBytes);
-                SpaceText = String.Format("{0} of {1}",
-                    ByteSizeLib.ByteSize.FromBytes((ulong)properties["System.FreeSpace"]).ToString(),
-                    ByteSizeLib.ByteSize.FromBytes((ulong)properties["System.Capacity"]).ToString());
+                object freeSpace = properties["System.FreeSpace"];
+                object capacity = properties["System.Capacity"];
+                if (freeSpace == null || capacity == null)
+                {
+                    SpaceText = "Unknown";
+                }
+                else
+                {
+                    SpaceUsed = MaxSpace -
+                                Convert.ToUInt64(ByteSizeLib.ByteSize.FromBytes((ulong)freeSpace).GigaBytes);
+                    MaxSpace = Convert.ToUInt64(ByteSizeLib.ByteSize.FromBytes((ulong)capacity).GigaBytes);
+                    SpaceText = string.Format("{0} of {1}",
+                        ByteSizeLib.ByteSize.FromBytes((ulong)freeSpace).ToString(),
+                        ByteSizeLib.ByteSize.FromBytes((ulong)capacity).ToString());
+                }
             }
             catch (NullReferenceException)
             {
