@@ -11,6 +11,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
@@ -187,15 +188,15 @@ namespace Files.Views.Pages
 
             if (amountComplete == amountTotal)
             {
-                UnloadObject(ProgressFlyout);
+                XamlMarkupHelper.UnloadObject(ProgressFlyout);
             }
         }
 
         private async void ModernShellPage_KeyUp(object sender, KeyRoutedEventArgs e)
         {
-            var ctrl = Window.Current.CoreWindow.GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
-            var alt = Window.Current.CoreWindow.GetKeyState(VirtualKey.Menu).HasFlag(CoreVirtualKeyStates.Down);
-            var shift = Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down);
+            var ctrl = Windows.UI.Xaml.Window.Current.CoreWindow.GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
+            var alt = Windows.UI.Xaml.Window.Current.CoreWindow.GetKeyState(VirtualKey.Menu).HasFlag(CoreVirtualKeyStates.Down);
+            var shift = Windows.UI.Xaml.Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down);
             var tabInstance = App.CurrentInstance.CurrentPageType == typeof(GenericFileBrowser) 
                 || App.CurrentInstance.CurrentPageType == typeof(GridViewBrowser);
 
@@ -299,6 +300,8 @@ namespace Files.Views.Pages
                 }
             }
         }
+
+        public bool IsPageTypeNotHome => App.InteractionViewModel.IsPageTypeNotHome;
     }
 
     public enum InteractionOperationType

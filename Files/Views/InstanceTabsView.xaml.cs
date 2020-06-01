@@ -1,6 +1,6 @@
 ﻿using Files.Filesystem;
 using Files.Views.Pages;
-using Microsoft.UI.Xaml.Controls;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -32,7 +33,7 @@ namespace Files
             // Turn on Navigation Cache
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
-            Window.Current.SizeChanged += Current_SizeChanged;
+            Windows.UI.Xaml.Window.Current.SizeChanged += Current_SizeChanged;
             Current_SizeChanged(null, null);
         }
 
@@ -56,7 +57,7 @@ namespace Files
         {
             navArgs = eventArgs.Parameter?.ToString();
 
-            if (TabStrip.TabItems.Count >= 1)
+            if (TabStrip.Items.Count >= 1)
             {
                 return;
             }
@@ -83,8 +84,7 @@ namespace Files
             Frame frame = new Frame();
             //frame.Navigate(t, path);
             string tabLocationHeader = null;
-            Microsoft.UI.Xaml.Controls.FontIconSource fontIconSource = new Microsoft.UI.Xaml.Controls.FontIconSource();
-            Microsoft.UI.Xaml.Controls.IconSource tabIcon;
+            FontIcon fontIconSource = new FontIcon();
 
             if (path != null)
             {
@@ -92,7 +92,7 @@ namespace Files
                 {
                     tabLocationHeader = ResourceController.GetTranslation("SidebarSettings/Text");
                     fontIconSource.Glyph = "\xE713";
-                    foreach (TabViewItem item in tabView.TabItems)
+                    foreach (TabViewItem item in tabView.Items)
                     {
                         if (item.Header.ToString() == ResourceController.GetTranslation("SidebarSettings/Text"))
                         {
@@ -188,7 +188,6 @@ namespace Files
                 }
             }
 
-            tabIcon = fontIconSource;
             Grid gr = new Grid();
             gr.Children.Add(frame);
             gr.HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -198,12 +197,12 @@ namespace Files
                 Header = tabLocationHeader,
                 Content = gr,
                 Width = 200,
-                IconSource = tabIcon,
+                Icon = fontIconSource,
                 Transitions = null,
                 ContentTransitions = null
             };
-            tabView.TabItems.Add(tvi);
-            TabStrip.SelectedIndex = TabStrip.TabItems.Count - 1;
+            tabView.Items.Add(tvi);
+            TabStrip.SelectedIndex = TabStrip.Items.Count - 1;
 
             var tabViewItemFrame = (tvi.Content as Grid).Children[0] as Frame;
             tabViewItemFrame.Loaded += delegate
@@ -218,8 +217,7 @@ namespace Files
         public async void SetSelectedTabInfo(string text, string currentPathForTabIcon = null)
         {
             string tabLocationHeader;
-            Microsoft.UI.Xaml.Controls.FontIconSource fontIconSource = new Microsoft.UI.Xaml.Controls.FontIconSource();
-            Microsoft.UI.Xaml.Controls.IconSource tabIcon;
+            Windows.UI.Xaml.Controls.FontIcon fontIconSource = new Windows.UI.Xaml.Controls.FontIcon();
 
             if (currentPathForTabIcon == null && text == ResourceController.GetTranslation("SidebarSettings/Text"))
             {
@@ -298,9 +296,8 @@ namespace Files
                     tabLocationHeader = currentPathForTabIcon.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).Split('\\', StringSplitOptions.RemoveEmptyEntries).Last();
                 }
             }
-            tabIcon = fontIconSource;
             (tabView.SelectedItem as TabViewItem).Header = tabLocationHeader;
-            (tabView.SelectedItem as TabViewItem).IconSource = tabIcon;
+            (tabView.SelectedItem as TabViewItem).Icon = fontIconSource;
         }
 
         public static string NormalizePath(string path)
@@ -368,12 +365,12 @@ namespace Files
 
                 case Windows.System.VirtualKey.Number9:
                     // Select the last tab
-                    tabToSelect = InvokedTabView.TabItems.Count - 1;
+                    tabToSelect = InvokedTabView.Items.Count - 1;
                     break;
             }
 
             // Only select the tab if it is in the list
-            if (tabToSelect < InvokedTabView.TabItems.Count)
+            if (tabToSelect < InvokedTabView.Items.Count)
             {
                 InvokedTabView.SelectedIndex = tabToSelect;
             }
@@ -387,13 +384,13 @@ namespace Files
             // Only close the selected tab if it is closeable
             if (((TabViewItem)InvokedTabView.SelectedItem).IsClosable)
             {
-                if (TabStrip.TabItems.Count == 1)
+                if (TabStrip.Items.Count == 1)
                 {
                     Application.Current.Exit();
                 }
                 else
                 {
-                    InvokedTabView.TabItems.Remove(InvokedTabView.SelectedItem);
+                    InvokedTabView.Items.Remove(InvokedTabView.SelectedItem);
                 }
             }
             args.Handled = true;
@@ -401,7 +398,7 @@ namespace Files
 
         private void DragArea_Loaded(object sender, RoutedEventArgs e)
         {
-            Window.Current.SetTitleBar(sender as Grid);
+            Windows.UI.Xaml.Window.Current.SetTitleBar(sender as Grid);
         }
 
         public void TabStrip_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -411,7 +408,7 @@ namespace Files
                 if (e.RemovedItems.Count > 0)
                 {
                     var itemToReselect = e.RemovedItems[0];
-                    if (TabStrip.TabItems.Contains(itemToReselect))
+                    if (TabStrip.Items.Contains(itemToReselect))
                     {
                         TabStrip.SelectedItem = itemToReselect;
                     }
@@ -439,31 +436,43 @@ namespace Files
                     App.InteractionViewModel.LeftMarginLoaded = true;
                 }
 
-                Microsoft.UI.Xaml.Controls.FontIconSource icon = new Microsoft.UI.Xaml.Controls.FontIconSource();
+                Windows.UI.Xaml.Controls.FontIcon icon = new Windows.UI.Xaml.Controls.FontIcon();
                 icon.Glyph = "\xE713";
-                if ((tabView.SelectedItem as TabViewItem).Header.ToString() != ResourceController.GetTranslation("SidebarSettings/Text") && (tabView.SelectedItem as TabViewItem).IconSource != icon)
+                if ((tabView.SelectedItem as TabViewItem).Header.ToString() != ResourceController.GetTranslation("SidebarSettings/Text") && (tabView.SelectedItem as TabViewItem).Icon != icon)
                 {
                     App.CurrentInstance = ItemViewModel.GetCurrentSelectedTabInstance<ModernShellPage>();
                 }
             }
         }
 
-        private void TabStrip_TabCloseRequested(Microsoft.UI.Xaml.Controls.TabView sender, Microsoft.UI.Xaml.Controls.TabViewTabCloseRequestedEventArgs args)
+        private void TabStrip_TabCloseRequested(object sender, TabClosingEventArgs args)
         {
-            if (TabStrip.TabItems.Count == 1)
+            if (TabStrip.Items.Count == 1)
             {
                 Application.Current.Exit();
             }
-            else if (TabStrip.TabItems.Count > 1)
+            else if (TabStrip.Items.Count > 1)
             {
-                int tabIndexToClose = TabStrip.TabItems.IndexOf(args.Tab);
-                TabStrip.TabItems.RemoveAt(tabIndexToClose);
+                int tabIndexToClose = TabStrip.Items.IndexOf(args.Tab);
+                TabStrip.Items.RemoveAt(tabIndexToClose);
             }
         }
 
         private void AddTabButton_Click(object sender, RoutedEventArgs e)
         {
             AddNewTab(typeof(ModernShellPage), "New tab");
+        }
+
+        public Color FallbackColor => App.AppSettings.AcrylicTheme.FallbackColor;
+        public Color TintColor => App.AppSettings.AcrylicTheme.TintColor;
+        public double TintOpacity => App.AppSettings.AcrylicTheme.TintOpacity;
+        public bool AcrylicEnabled => App.AppSettings.AcrylicEnabled;
+
+        public bool LeftMarginLoaded => App.InteractionViewModel.LeftMarginLoaded;
+
+        private void TabStrip_TabClosing(object sender, TabClosingEventArgs e)
+        {
+
         }
     }
 

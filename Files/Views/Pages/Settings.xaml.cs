@@ -17,12 +17,11 @@ namespace Files
 
             var CoreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             CoreTitleBar.ExtendViewIntoTitleBar = true;
-            Window.Current.SetTitleBar(DragArea);
-
+            Windows.UI.Xaml.Window.Current.SetTitleBar(DragArea);
             SettingsPane.SelectedItem = SettingsPane.MenuItems[0];
         }
 
-        private void NavigationView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
+        private void NavigationView_ItemInvoked(object sender, Windows.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
         {
             //ToDo waiting for WinUI bug to be fixed before using item invoked
 
@@ -38,7 +37,7 @@ namespace Files
             //};
         }
 
-        private void SettingsPane_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        private void SettingsPane_SelectionChanged(object sender, Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             _ = SettingsPane.MenuItems.IndexOf(SettingsPane.SelectedItem) switch
             {
@@ -53,9 +52,9 @@ namespace Files
             };
         }
 
-        private void SettingsPane_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+        private void SettingsPane_BackRequested(object sender, Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
+            Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(InstanceTabsView));
         }
     }

@@ -73,5 +73,11 @@ namespace Files.SettingsPages
                 };
             };
         }
+
+        public bool AcrylicEnabled
+        {
+            get => App.AppSettings.AcrylicEnabled;
+            set => App.AppSettings.AcrylicEnabled = value;
+        }
     }
 }

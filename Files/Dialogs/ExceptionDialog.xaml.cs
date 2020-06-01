@@ -32,13 +32,13 @@ namespace Files.Dialogs
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            if (InstanceTabsView.tabView.TabItems.Count == 1)
+            if (InstanceTabsView.tabView.Items.Count == 1)
             {
                 Application.Current.Exit();
             }
-            else if (InstanceTabsView.tabView.TabItems.Count > 1)
+            else if (InstanceTabsView.tabView.Items.Count > 1)
             {
-                InstanceTabsView.tabView.TabItems.RemoveAt(InstanceTabsView.tabView.SelectedIndex);
+                InstanceTabsView.tabView.Items.RemoveAt(InstanceTabsView.tabView.SelectedIndex);
             }
         }
 

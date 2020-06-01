@@ -22,7 +22,7 @@ namespace Files
     /// <summary>
     /// The base class which every layout page must derive from
     /// </summary>
-    public abstract class BaseLayout : Page, INotifyPropertyChanged
+    public abstract partial class BaseLayout : Page, INotifyPropertyChanged
     {
         public bool IsQuickLookEnabled { get; set; } = false;
 
@@ -144,11 +144,11 @@ namespace Files
             base.OnNavigatedTo(eventArgs);
             // Add item jumping handler
             App.AppSettings.LayoutModeChangeRequested += AppSettings_LayoutModeChangeRequested;
-            Window.Current.CoreWindow.CharacterReceived += Page_CharacterReceived;
+            Windows.UI.Xaml.Window.Current.CoreWindow.CharacterReceived += Page_CharacterReceived;
             var parameters = (string)eventArgs.Parameter;
             if (App.AppSettings.FormFactor == Enums.FormFactorMode.Regular)
             {
-                Frame rootFrame = Window.Current.Content as Frame;
+                Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
                 InstanceTabsView instanceTabsView = rootFrame.Content as InstanceTabsView;
                 instanceTabsView.TabStrip_SelectionChanged(null, null);
             }
@@ -177,7 +177,7 @@ namespace Files
         {
             base.OnNavigatingFrom(e);
             // Remove item jumping handler
-            Window.Current.CoreWindow.CharacterReceived -= Page_CharacterReceived;
+            Windows.UI.Xaml.Window.Current.CoreWindow.CharacterReceived -= Page_CharacterReceived;
             if (App.CurrentInstance.ViewModel._fileQueryResult != null)
             {
                 App.CurrentInstance.ViewModel._fileQueryResult.ContentsChanged -= App.CurrentInstance.ViewModel.FileContentsChanged;

@@ -5,8 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Files"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives"
+    xmlns:muxc="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:contract6Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     mc:Ignorable="d">
@@ -14,17 +13,16 @@
         <AcrylicBrush
             Windows10version1903:TintLuminosityOpacity="0.9"
             BackgroundSource="HostBackdrop"
-            FallbackColor="{x:Bind local:App.AppSettings.AcrylicTheme.FallbackColor, Mode=OneWay}"
-            TintColor="{x:Bind local:App.AppSettings.AcrylicTheme.TintColor, Mode=OneWay}"
-            TintOpacity="{x:Bind local:App.AppSettings.AcrylicTheme.TintOpacity, Mode=OneWay}"
-            AlwaysUseFallback="{x:Bind local:App.AppSettings.AcrylicEnabled, Mode=OneWay}" />
+            FallbackColor="{Binding FallbackColor, Mode=OneWay}"
+            TintColor="{Binding TintColor, Mode=OneWay}"
+            TintOpacity="{Binding TintOpacity, Mode=OneWay}"
+            AlwaysUseFallback="{Binding AcrylicEnabled, Mode=OneWay}" />
     </Page.Background>
 
     <Grid x:Name="rootGrid" Background="Transparent">
         <Grid.Resources>
             <Style x:Key="DefaultTabViewStyle" TargetType="muxc:TabView">
                 <Setter Property="VerticalAlignment" Value="Top" />
-                <Setter Property="Padding" Value="{ThemeResource TabViewHeaderPadding}" />
                 <Setter Property="IsTabStop" Value="False" />
                 <Setter Property="Background" Value="{ThemeResource TabViewBackground}" />
                 <contract6Present:Setter Property="KeyboardAcceleratorPlacementMode" Value="Hidden" />
@@ -53,22 +51,22 @@
                                     <ContentPresenter
                                         Grid.Column="0"
                                         x:Name="LeftContentPresenter"
-                                        Content="{TemplateBinding TabStripHeader}"
-                                        ContentTemplate="{TemplateBinding TabStripHeaderTemplate}" />
+                                        Content="{TemplateBinding TabStartHeader}"
+                                        ContentTemplate="{TemplateBinding TabStartHeaderTemplate}" />
 
                                     <Grid x:Name="ShadowReceiver"
                                           Grid.ColumnSpan="4" />
 
-                                    <primitives:TabViewListView
+                                    <muxc:TabViewItem
                                         Grid.Column="1"
-                                        x:Name="TabListView"
-                                        CanReorderItems="{TemplateBinding CanReorderTabs}"
-                                        CanDragItems="{TemplateBinding CanDragTabs}"
-                                        AllowDrop="{TemplateBinding AllowDropTabs}"
-                                        ItemsSource="{TemplateBinding TabItemsSource}"
-                                        ItemTemplate="{TemplateBinding TabItemTemplate}"
-                                        ItemContainerTransitions="{x:Null}"
-                                        ItemTemplateSelector="{TemplateBinding TabItemTemplateSelector}" />
+                                        x:Name="TabListView">
+                                        <ListView CanReorderItems="{TemplateBinding CanReorderItems}"
+                                            CanDragItems="{TemplateBinding CanDragItems}"
+                                            AllowDrop="{TemplateBinding AllowDrop}"
+                                            ItemsSource="{TemplateBinding ItemsSource}"
+                                            ItemTemplate="{TemplateBinding ItemTemplate}"
+                                            ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}" />
+                                    </muxc:TabViewItem>
 
                                     <Button
                                         Grid.Column="2"
@@ -76,8 +74,6 @@
                                         Content="&#xE710;"
                                         VerticalAlignment="Stretch"
                                         IsTextScaleFactorEnabled="False"
-                                        Command="{TemplateBinding AddTabButtonCommand}"
-                                        CommandParameter="{TemplateBinding AddTabButtonCommandParameter}"
                                         Visibility="{Binding IsAddTabButtonVisible, RelativeSource={RelativeSource TemplatedParent}}"
                                         HighContrastAdjustment="None" />
 
@@ -85,8 +81,8 @@
                                         Grid.Column="3"
                                         x:Name="RightContentPresenter"
                                         HorizontalAlignment="Stretch"
-                                        Content="{TemplateBinding TabStripFooter}"
-                                        ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+                                        Content="{TemplateBinding Footer}"
+                                        ContentTemplate="{TemplateBinding FooterTemplate}" />
                                 </Grid>
 
                                 <!-- We don't want this to take space on the second row in case the user isn't using tab content. -->
@@ -112,23 +108,21 @@
             VerticalAlignment="Stretch"
             x:FieldModifier="public"
             Background="Transparent"
-            Style="{StaticResource DefaultTabViewStyle}"
-            IsAddTabButtonVisible="False"
             SelectionChanged="TabStrip_SelectionChanged"
-            TabCloseRequested="TabStrip_TabCloseRequested"
-            TabWidthMode="Equal">
+            TabClosing="TabStrip_TabClosing"
+            TabWidthBehavior="Equal">
             <muxc:TabView.Resources>
                 <ThemeResource x:Key="TabViewItemHeaderBackgroundSelected" ResourceKey="ApplicationPageBackgroundThemeBrush" />
                 <Thickness x:Key="TabViewHeaderPadding">0,0,0,0</Thickness>
             </muxc:TabView.Resources>
-            <muxc:TabView.TabStripHeader>
+            <muxc:TabView.Header>
                 <Grid
                     x:Name="DragArea2"
                     Width="0"
                     Background="Transparent"
-                    Visibility="{x:Bind local:App.InteractionViewModel.LeftMarginLoaded, Mode=OneWay}" />
-            </muxc:TabView.TabStripHeader>
-            <muxc:TabView.TabStripFooterTemplate>
+                    Visibility="{Binding LeftMarginLoaded, Mode=OneWay}" />
+            </muxc:TabView.Header>
+            <muxc:TabView.FooterTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -157,7 +151,7 @@
                             Loaded="DragArea_Loaded" />
                     </Grid>
                 </DataTemplate>
-            </muxc:TabView.TabStripFooterTemplate>
+            </muxc:TabView.FooterTemplate>
             <muxc:TabView.KeyboardAccelerators>
                 <KeyboardAccelerator
                     Key="Number1"

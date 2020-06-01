@@ -4,6 +4,7 @@ using Files.Helpers;
 using Files.Interacts;
 using Files.Views.Pages;
 using Microsoft.Toolkit.Uwp.UI;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
 using FileAttributes = System.IO.FileAttributes;
+using TabViewItem = Microsoft.Toolkit.Uwp.UI.Controls.TabViewItem;
+using ThumbnailMode = Windows.Storage.FileProperties.ThumbnailMode;
 
 namespace Files.Filesystem
 {
@@ -561,7 +564,7 @@ namespace Files.Filesystem
         private static extern bool FindClose(IntPtr hFindFile);
 
         [DllImport("api-ms-win-core-timezone-l1-1-0.dll", SetLastError = true)]
-        private static extern bool FileTimeToSystemTime(ref FILETIME lpFileTime, out SYSTEMTIME lpSystemTime);
+        private static extern bool FileTimeToSystemTime(ref System.Runtime.InteropServices.ComTypes.FILETIME lpFileTime, out SYSTEMTIME lpSystemTime);
 
         private bool _isLoadingItems = false;
 

@@ -69,5 +69,17 @@ namespace Files.SettingsPages
             App.AppSettings.PinOneDriveToSideBar = OneDrivePin.IsOn;
             OneDrivePin.IsEnabled = true;
         }
+
+        public bool PinOneDriveToSideBar
+        {
+            get => App.AppSettings.PinOneDriveToSideBar;
+            set => App.AppSettings.PinOneDriveToSideBar = value;
+        }
+
+        public bool ShowConfirmDeleteDialog_
+        {
+            get => App.AppSettings.ShowConfirmDeleteDialog;
+            set => App.AppSettings.ShowConfirmDeleteDialog = value;
+        }
     }
 }

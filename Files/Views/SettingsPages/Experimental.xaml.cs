@@ -23,5 +23,11 @@ namespace Files.SettingsPages
         {
             this.InitializeComponent();
         }
+
+        public bool DoubleTapToRenameFiles
+        {
+            get => App.AppSettings.DoubleTapToRenameFiles;
+            set => App.AppSettings.DoubleTapToRenameFiles = value;
+        }
     }
 }

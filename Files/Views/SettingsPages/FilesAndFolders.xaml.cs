@@ -22,5 +22,11 @@ namespace Files.SettingsPages
             App.AppSettings.ShowFileExtensions = FileExtensionsToggle.IsOn;
             FileExtensionsToggle.IsEnabled = true;
         }
+
+        public bool ShowFileExtensions
+        {
+            get => App.AppSettings.ShowFileExtensions;
+            set => App.AppSettings.ShowFileExtensions = value;
+        }
     }
 }

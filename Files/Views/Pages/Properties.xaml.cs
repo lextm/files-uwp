@@ -234,5 +234,10 @@ namespace Files
             get => _LoadFileIcon;
             set => Set(ref _LoadFileIcon, value);
         }
+
+        public Color FallbackColor => App.AppSettings.AcrylicTheme.FallbackColor;
+        public Color TintColor => App.AppSettings.AcrylicTheme.TintColor;
+        public double TintOpacity => App.AppSettings.AcrylicTheme.TintOpacity;
+        public bool AcrylicEnabled => App.AppSettings.AcrylicEnabled;
     }
 }

@@ -86,7 +86,7 @@ namespace Files.View_Models
 
             if (ListFile != null)
             {
-                var ListFileLines = await FileIO.ReadLinesAsync(ListFile);
+                var ListFileLines = await File.ReadAllLinesAsync(ListFile.Path);
                 foreach (string locationPath in ListFileLines)
                 {
                     try
@@ -145,14 +145,14 @@ namespace Files.View_Models
 
             if (ListFile != null)
             {
-                var ListFileLines = await FileIO.ReadLinesAsync(ListFile);
+                var ListFileLines = (await File.ReadAllLinesAsync(ListFile.Path)).ToList();
                 foreach (string path in LinesToRemoveFromFile)
                 {
                     ListFileLines.Remove(path);
                 }
 
-                await FileIO.WriteLinesAsync(ListFile, ListFileLines);
-                ListFileLines = await FileIO.ReadLinesAsync(ListFile);
+                await File.WriteAllLinesAsync(ListFile.Path, ListFileLines);
+                ListFileLines = (await File.ReadAllLinesAsync(ListFile.Path)).ToList();
 
                 // Remove unpinned items from sidebar
                 var sideBarItems_Copy = App.sideBarItems.ToList();
@@ -395,19 +395,19 @@ namespace Files.View_Models
             }
         }
 
-        public string DesktopPath = UserDataPaths.GetDefault().Desktop;
+        public string DesktopPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Desktop");
 
-        public string DocumentsPath = UserDataPaths.GetDefault().Documents;
+        public string DocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-        public string DownloadsPath = UserDataPaths.GetDefault().Downloads;
+        public string DownloadsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Downloads");
 
-        public string PicturesPath = UserDataPaths.GetDefault().Pictures;
+        public string PicturesPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
-        public string MusicPath = UserDataPaths.GetDefault().Music;
+        public string MusicPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
 
-        public string VideosPath = UserDataPaths.GetDefault().Videos;
+        public string VideosPath = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
 
-        private string _TempPath = (string)Microsoft.Win32.Registry.GetValue(@"HKEY_CURRENT_USER\Environment", "TEMP", null);
+        private string _TempPath = Path.GetTempPath();
 
         public string TempPath
         {

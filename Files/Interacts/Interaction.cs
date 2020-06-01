@@ -394,13 +394,13 @@ namespace Files.Interacts
 
         public void CloseTab()
         {
-            if (((Window.Current.Content as Frame).Content as InstanceTabsView).TabStrip.TabItems.Count == 1)
+            if (((Window.Current.Content as Frame).Content as InstanceTabsView).TabStrip.Items.Count == 1)
             {
                 Application.Current.Exit();
             }
-            else if (((Window.Current.Content as Frame).Content as InstanceTabsView).TabStrip.TabItems.Count > 1)
+            else if (((Window.Current.Content as Frame).Content as InstanceTabsView).TabStrip.Items.Count > 1)
             {
-                ((Window.Current.Content as Frame).Content as InstanceTabsView).TabStrip.TabItems.RemoveAt(((Window.Current.Content as Frame).Content as InstanceTabsView).TabStrip.SelectedIndex);
+                ((Window.Current.Content as Frame).Content as InstanceTabsView).TabStrip.Items.RemoveAt(((Window.Current.Content as Frame).Content as InstanceTabsView).TabStrip.SelectedIndex);
             }
         }
 

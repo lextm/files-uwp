@@ -88,14 +88,14 @@ namespace Files.View_Models
 
                 if (App.CurrentInstance.ContentPage.IsItemSelected)
                 {
-                    DateTimeOffset dateCreated;
+                    DateTimeOffset dateCreated = DateTimeOffset.MinValue;
                     if (App.CurrentInstance.ContentPage.SelectedItem.PrimaryItemAttribute == StorageItemTypes.Folder)
                     {
                         dateCreated = StorageFolder.GetFolderFromPathAsync(App.CurrentInstance.ContentPage.SelectedItem.ItemPath).GetResults().DateCreated;
                     }
                     else if (App.CurrentInstance.ContentPage.SelectedItem.PrimaryItemAttribute == StorageItemTypes.File)
                     {
-                        dateCreated = StorageFile.GetFileFromPathAsync(App.CurrentInstance.ContentPage.SelectedItem.ItemPath).GetResults().DateCreated;
+                        dateCreated = StorageFile.GetFileFromPathAsync(App.CurrentInstance.ContentPage.SelectedItem.ItemPath).GetAwaiter().GetResult().DateCreated;
                     }
                     return ListedItem.GetFriendlyDate(dateCreated);
                 }
