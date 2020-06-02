@@ -445,7 +445,7 @@ namespace Files
             }
         }
 
-        private void TabStrip_TabCloseRequested(object sender, TabClosingEventArgs args)
+        private void TabStrip_TabClosing(object sender, TabClosingEventArgs args)
         {
             if (TabStrip.Items.Count == 1)
             {

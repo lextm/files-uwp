@@ -112,7 +112,6 @@
             TabClosing="TabStrip_TabClosing"
             TabWidthBehavior="Equal">
             <muxc:TabView.Resources>
-                <ThemeResource x:Key="TabViewItemHeaderBackgroundSelected" ResourceKey="ApplicationPageBackgroundThemeBrush" />
                 <Thickness x:Key="TabViewHeaderPadding">0,0,0,0</Thickness>
             </muxc:TabView.Resources>
             <muxc:TabView.Header>
