@@ -23,7 +23,6 @@
         <Grid.Resources>
             <Style x:Key="DefaultTabViewStyle" TargetType="muxc:TabView">
                 <Setter Property="VerticalAlignment" Value="Top" />
-                <Setter Property="Padding" Value="{ThemeResource TabViewHeaderPadding}" />
                 <Setter Property="IsTabStop" Value="False" />
                 <Setter Property="Background" Value="{ThemeResource TabViewBackground}" />
                 <contract6Present:Setter Property="KeyboardAcceleratorPlacementMode" Value="Hidden" />
@@ -60,13 +59,14 @@
 
                                     <muxc:TabViewItem
                                         Grid.Column="1"
-                                        x:Name="TabListView"
-                                        CanReorderItems="{TemplateBinding CanReorderTabs}"
-                                        CanDragItems="{TemplateBinding CanDragTabs}"
-                                        AllowDrop="{TemplateBinding AllowDropTabs}"
-                                        ItemsSource="{TemplateBinding TabItemsSource}"
-                                        ItemTemplate="{TemplateBinding TabItemTemplate}"
-                                        ItemTemplateSelector="{TemplateBinding TabItemTemplateSelector}" />
+                                        x:Name="TabListView">
+                                        <ListView CanReorderItems="{TemplateBinding CanReorderItems}"
+                                            CanDragItems="{TemplateBinding CanDragItems}"
+                                            AllowDrop="{TemplateBinding AllowDrop}"
+                                            ItemsSource="{TemplateBinding ItemsSource}"
+                                            ItemTemplate="{TemplateBinding ItemTemplate}"
+                                            ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}" />
+                                    </muxc:TabViewItem>
 
                                     <Button
                                         Grid.Column="2"
@@ -74,8 +74,6 @@
                                         Content="&#xE710;"
                                         VerticalAlignment="Stretch"
                                         IsTextScaleFactorEnabled="False"
-                                        Command="{TemplateBinding AddTabButtonCommand}"
-                                        CommandParameter="{TemplateBinding AddTabButtonCommandParameter}"
                                         Visibility="{Binding IsAddTabButtonVisible, RelativeSource={RelativeSource TemplatedParent}}"
                                         HighContrastAdjustment="None" />
 
@@ -83,8 +81,8 @@
                                         Grid.Column="3"
                                         x:Name="RightContentPresenter"
                                         HorizontalAlignment="Stretch"
-                                        Content="{TemplateBinding TabStripFooter}"
-                                        ContentTemplate="{TemplateBinding TabStripFooterTemplate}" />
+                                        Content="{TemplateBinding Footer}"
+                                        ContentTemplate="{TemplateBinding FooterTemplate}" />
                                 </Grid>
 
                                 <!-- We don't want this to take space on the second row in case the user isn't using tab content. -->
@@ -110,12 +108,11 @@
             VerticalAlignment="Stretch"
             x:FieldModifier="public"
             Background="Transparent"
-            Style="{StaticResource DefaultTabViewStyle}"
-            IsAddTabButtonVisible="False"
             SelectionChanged="TabStrip_SelectionChanged"
-            TabCloseRequested="TabStrip_TabCloseRequested"
-            TabWidthMode="Equal">
+            TabClosing="TabStrip_TabClosing"
+            TabWidthBehavior="Equal">
             <muxc:TabView.Resources>
+                <ThemeResource x:Key="TabViewItemHeaderBackgroundSelected" ResourceKey="ApplicationPageBackgroundThemeBrush" />
                 <Thickness x:Key="TabViewHeaderPadding">0,0,0,0</Thickness>
             </muxc:TabView.Resources>
             <muxc:TabView.Header>

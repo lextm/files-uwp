@@ -21,7 +21,7 @@ namespace Files
             SettingsPane.SelectedItem = SettingsPane.MenuItems[0];
         }
 
-        private void NavigationView_ItemInvoked(Windows.UI.Xaml.Controls.NavigationView sender, Windows.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
+        private void NavigationView_ItemInvoked(object sender, Windows.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
         {
             //ToDo waiting for WinUI bug to be fixed before using item invoked
 
@@ -37,7 +37,7 @@ namespace Files
             //};
         }
 
-        private void SettingsPane_SelectionChanged(Windows.UI.Xaml.Controls.NavigationView sender, Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        private void SettingsPane_SelectionChanged(object sender, Windows.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             _ = SettingsPane.MenuItems.IndexOf(SettingsPane.SelectedItem) switch
             {
@@ -52,7 +52,7 @@ namespace Files
             };
         }
 
-        private void SettingsPane_BackRequested(Windows.UI.Xaml.Controls.NavigationView sender, Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+        private void SettingsPane_BackRequested(object sender, Windows.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
         {
             Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(InstanceTabsView));

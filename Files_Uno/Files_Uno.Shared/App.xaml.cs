@@ -70,8 +70,9 @@ namespace Files
 
             // Initialize NLog
             Windows.Storage.StorageFolder storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-            //NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
-
+#if !__MACOS__
+            NLog.LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
+#endif
             RegisterUncaughtExceptionLogger();
 
             ConsentDialogDisplay = new Dialogs.ConsentDialog();
